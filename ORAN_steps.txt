@@ -1,0 +1,10 @@
+cd ~/Projects/USA/lab/ORAN_Dashboard-main_1/ORAN_Dashboard-main
+conda activate oran
+You can check if it’s running by doing:  docker ps
+docker start oran_mongo
+python database.py      # (only first time)
+python -u app.py
+
+pagina web: http://localhost:8000/
+
+to stop the docker: docker stop oran_mongo
