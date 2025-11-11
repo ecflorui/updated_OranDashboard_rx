@@ -16,8 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/3.3.4/bokeh-widgets.min.js" integrity="sha512-Md4YQ/6eQ48YKeSS7/02Mpq6veVCYFKXcBrX2W0vyGRkmENAunZFh4ZS0dzPQ/U1Az5MxVpFAIxbunwgrkV3uQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <style>
-      .bk .bk-slider .noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr{
-            background: linear-gradient(to right, cyan, blue); /* Example gradient */
+        .bk .bk-slider .noUi-target.noUi-ltr.noUi-horizontal.noUi-txt-dir-ltr {
+          background: linear-gradient(to right, cyan, blue);
         }
         .bk .bk-slider.bk-disabled {
             opacity: 1; /* Ensures the slider doesn't look faded when disabled */
@@ -84,7 +84,7 @@
           <!--  -->
           <!-- Section 2 -->
           <div class="col-3 border">
-            <img src="{{url_for('static', filename='power_graph.png')}}" alt="Power Graph" height="230"/>
+            {{ image_pairs_script | safe }}
           </div>
           <!--  -->
           <!-- Section 3 -->

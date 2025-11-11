@@ -4,6 +4,7 @@ from views.rbs_assigned import rbs_assigned
 from views.classifier_output import classifier_output
 from views.scheduling_policy import scheduling_policy
 from views.toggle_switch import toggle_switch
+from views.image_pairs import image_pairs_app
 from bokeh.server.server import Server
 from tornado.ioloop import IOLoop
 from bokeh.embed import server_document
@@ -16,12 +17,14 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def bkapp_page():
     graphs_script = server_document('http://localhost:5006/graphs')
+    image_pairs_script = server_document('http://localhost:5006/image_pairs')
     rbs_assigned_script = server_document('http://localhost:5006/rbs_assigned')
     classifier_output_script = server_document('http://localhost:5006/classifier_output')
     scheduling_policy_script = server_document('http://localhost:5006/scheduling_policy')
     toggle_switch_script = server_document('http://localhost:5006/toggle_switch')
     return render_template("index.html", 
                            graphs_script=graphs_script,
+                           image_pairs_script=image_pairs_script,
                            rbs_assigned_script = rbs_assigned_script,
                            classifier_output_script = classifier_output_script,
                            scheduling_policy_script = scheduling_policy_script,
@@ -35,6 +38,7 @@ def bk_worker():
         '/classifier_output' : classifier_output,
         '/scheduling_policy': scheduling_policy,
         '/toggle_switch': toggle_switch,
+        '/image_pairs': image_pairs_app,
     }
     server = Server(bk_apps, io_loop=IOLoop(), port=5006, allow_websocket_origin=["localhost:8000", "127.0.0.1:8000"])
     server.start()
