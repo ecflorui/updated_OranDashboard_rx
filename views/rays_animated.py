@@ -6,8 +6,6 @@ from bokeh.models import ColumnDataSource
 from bokeh.layouts import column
 from bokeh.document import Document
 
-# Use the exact string you requested; served relative to the page.
-# Ensure the file exists at <project_root>/static/sionna_scene.png
 BACKGROUND_URL = "./static/sionna_scene.png"
 
 def load_scene():
@@ -15,9 +13,8 @@ def load_scene():
     Demo loader: replace with your Sionna loader that returns:
       - transmitters: list of dicts [{"x":..., "y":...}, ...]
       - receivers: list of dicts [{"x":..., "y":...}, ...]
-      - ray_paths: list of rays where each ray is a list of (x,y) points (tx -> bounce* -> rx)
-    Coordinates here are normalized (0..1). If your coordinates are in meters,
-    set the figure ranges accordingly and draw the image with matching x,y,w,h.
+      - ray_paths: list of rays where each ray is a list of (x,y) points (tx -> rx)
+    Coordinates here are normalized (0..1).
     """
     # demo transmitters (red) and receivers (green)
     transmitters = [
@@ -33,15 +30,7 @@ def load_scene():
     ray_paths = []
     for tx in transmitters:
         for rx in receivers:
-            # n_bounces = np.random.randint(0, 3)
-            n_bounces = 0
             pts = [(tx["x"], tx["y"])]
-            for b in range(n_bounces):
-                bx = (tx["x"]*(1-(b+1)/(n_bounces+1)) + rx["x"]*((b+1)/(n_bounces+1))) \
-                     + np.random.uniform(-0.04, 0.04)
-                by = (tx["y"]*(1-(b+1)/(n_bounces+1)) + rx["y"]*((b+1)/(n_bounces+1))) \
-                     + np.random.uniform(-0.04, 0.04)
-                pts.append((bx, by))
             pts.append((rx["x"], rx["y"]))
             ray_paths.append(pts)
 
@@ -118,10 +107,10 @@ def animate_rays_cycle4_app(doc: Document):
     p = figure(width=900, height=600, x_range=(0,1), y_range=(0,1), tools="")
     p.axis.visible = False; p.grid.visible = False
 
-    # make the background image smaller: set x,y,w,h (change as desired)
+    # set the background image
     p.image_url(url=[BACKGROUND_URL], x=0, y=1, w=1, h=1, anchor="top_left")
 
-    # transmitters as red, receivers as green (as you requested)
+    # transmitters as red, receivers as green
     tx_source = ColumnDataSource(data=dict(x=[t["x"] for t in txs], y=[t["y"] for t in txs]))
     p.circle('x','y', source=tx_source, size=12, fill_color="red", line_color="black", alpha=0.95)
 
@@ -142,8 +131,8 @@ def animate_rays_cycle4_app(doc: Document):
     # Animation configuration
     UPDATE_MS = 50              # 50 ms tick (~20 FPS)
     dt = UPDATE_MS / 1000.0     # seconds per tick
-    grow_speed = 0.9            # fraction/sec for ray growth (tune)
-    particle_speed = 0.8        # fraction/sec for particle progress (tune)
+    grow_speed = 0.6            # fraction/sec for ray growth (tune)
+    particle_speed = 0.4        # fraction/sec for particle progress (tune)
     cycle_pause = 2.0           # seconds to wait between cycles for each ray
 
     # activation schedule: we stagger initial activation by small offsets
