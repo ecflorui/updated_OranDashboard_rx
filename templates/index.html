@@ -88,7 +88,7 @@
           </div>
           <!--  -->
           <!-- Section 3 -->
-          <div
+          <!-- <div
             class="col-4 border d-flex flex-column align-items-center justify-content-around"
           >
             <div class="d-flex flex-row">
@@ -112,19 +112,19 @@
                 EWMA Accuracy
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- Graphs Section -->
       <section class="container-fluid border">
         <div class="border d-flex flex-row">
           <!-- KPI Graphs Section -->
-          <div class="border flex-fill d-flex flex-wrap" style="background-color: #252525;">
+          <div class="border  d-flex flex-wrap" style="background-color: #252525;">
             {{ graphs_script | safe }}
           </div>
           
           <!-- Power Graph Section -->
-          <div class="border flex-fill">
+          <!-- <div class="border flex-fill">
             <div class="col border d-flex flex-row pt-5 pb-5">
               <div class="col border">
                 <div class="d-flex flex-column align-items-center">
@@ -215,7 +215,10 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
+          <div class="col-4 border">
+            {{ animate_rays_script | safe }}
+          </div>
 
                 
               </div>
