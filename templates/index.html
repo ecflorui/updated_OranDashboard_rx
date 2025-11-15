@@ -34,52 +34,11 @@
       <div class="container-fluid">
         <div class="row">
           <!-- Section 1 -->
-          <div class="col-5 border d-flex flex-column">
-            <div class="col border d-flex justify-content-evenly">
-              <div
-                class="border d-flex flex-column justify-content-around p-2 col-6"
-              >
-                <p class="h6 align-self-center m-0" style="cursor: default">
-                  Ground Truth
-                </p>
-                <button
-                  class="btn btn-danger align-middle align-self-center col-12"
-                  style="cursor: default"
-                >
-                  URLLC
-                </button>
-              </div>
-              <div
-                class="border d-flex flex-column justify-content-around p-2 col-6"
-              >
-                <p class="h6 align-self-center m-0" style="cursor: default">
-                  Classification Output
-                </p>
-                <button
-                  class="btn btn-warning align-middle align-self-center col-12 text-light"
-                  style="cursor: default" 
-                >
-                  {{ classifier_output_script | safe }}
-                </button>
-              </div>
-            </div>
-            <div class="col border d-flex flex-column justify-content-evenly">
-              <div
-                class="progress"
-                role="progressbar"
-                aria-label="Example with label"
-                aria-valuenow="25"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                <div class="progress-bar" style="width: 25%">
-                  {{ ewma_accuracy_url }}
-                </div>
-              </div>
-              <p class="h6 align-self-center" style="cursor: default">
-                EWMA Accuracy
-              </p>
-            </div>
+          <div class="col-5 border d-flex flex-column justify-content-center align-items-center p-3">
+            <img src="{{ url_for('static', filename='power_graph.png') }}" 
+                 alt="Power Graph" 
+                 class="img-fluid"
+                 style="max-width: 100%; height: auto;">
           </div>
           <!--  -->
           <!-- Section 2 -->
@@ -118,10 +77,12 @@
       <!-- Graphs Section -->
       <section class="container-fluid border">
         <div class="border d-flex flex-row">
-          <!-- KPI Graphs Section -->
-          <div class="border  d-flex flex-wrap" style="background-color: #252525;">
-            {{ graphs_script | safe }}
+          <!-- Loss vs Epoch Graph Section -->
+          <div class="border d-flex justify-content-center align-items-center" style="background-color: #252525; width: 100%; padding: 20px; min-height: 550px;">
+            {{ loss_epoch_script | safe }}
           </div>
+        </div>
+      </section>
           
           <!-- Power Graph Section -->
           <!-- <div class="border flex-fill">
