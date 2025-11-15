@@ -16,179 +16,184 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/3.3.4/bokeh-widgets.min.js" integrity="sha512-Md4YQ/6eQ48YKeSS7/02Mpq6veVCYFKXcBrX2W0vyGRkmENAunZFh4ZS0dzPQ/U1Az5MxVpFAIxbunwgrkV3uQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <style>
+        /* Global Dark Theme */
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header Styling */
+        .dashboard-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .dashboard-header p {
+            color: #b0b0b0;
+            margin: 5px 0 0 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Section Styling */
+        .dashboard-section {
+            background-color: #252525;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid #333;
+        }
+        
+        .section-title {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4a90e2;
+        }
+        
+        /* Card Styling */
+        .dashboard-card {
+            background-color: #2d2d2d;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            border: 1px solid #3a3a3a;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Image Container */
+        .image-container {
+            background-color: #2d2d2d;
+            border-radius: 6px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .image-container img {
+            border-radius: 4px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Bokeh Slider Styling */
         .bk .bk-slider .noUi-target.noUi-ltr.noUi-horizontal.noUi-txt-dir-ltr {
-          background: linear-gradient(to right, cyan, blue);
+            background: linear-gradient(to right, cyan, blue);
         }
         .bk .bk-slider.bk-disabled {
-            opacity: 1; /* Ensures the slider doesn't look faded when disabled */
+            opacity: 1; 
+        }
+        
+        /* Custom Button Styling */
+        .bk-root .custom-btn {
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bk-root .custom-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .bk-root .custom-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Remove default borders */
+        .no-border {
+            border: none !important;
+        }
+        
+        /* Container improvements */
+        .container-fluid {
+            padding: 20px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 1.5rem;
+            }
+            .container-fluid {
+                padding: 10px;
+            }
         }
     </style>
-
-    <title>ML Project</title>
-
-    
+    <title>ORAN Dashboard</title>  
   </head>
-  <!-- add class "bg-dark" for dark mode -->
-  <body class="">
-    <div id="app">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- Section 1 -->
-          <div class="col-5 border d-flex flex-column justify-content-center align-items-center p-3">
-            <img src="{{ url_for('static', filename='power_graph.png') }}" 
-                 alt="Power Graph" 
-                 class="img-fluid"
-                 style="max-width: 100%; height: auto;">
-          </div>
-          <!--  -->
-          <!-- Section 2 -->
-          <div class="col-3 border">
-            {{ image_pairs_script | safe }}
-          </div>
-          <!--  -->
-          <!-- Section 3 -->
-          <!-- <div
-            class="col-4 border d-flex flex-column align-items-center justify-content-around"
-          >
-            <div class="d-flex flex-row">
-              {{ toggle_switch_script | safe }}
-            </div>
-
-            <div class="d-flex flex-column">
-              <div
-                class="progress"
-                role="progressbar"
-                aria-label="Example with label"
-                aria-valuenow="25"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                <div class="progress-bar" style="width: 25%">
-                  {{power_percentage}}
-                </div>
-              </div>
-              <p class="align-self-center" style="cursor: default">
-                EWMA Accuracy
-              </p>
-            </div>
-          </div> -->
-        </div>
-      </div>
-      <!-- Graphs Section -->
-      <section class="container-fluid border">
-        <div class="border d-flex flex-row">
-          <!-- Loss vs Epoch Graph Section -->
-          <div class="border d-flex justify-content-center align-items-center" style="background-color: #252525; width: 100%; padding: 20px; min-height: 550px;">
-            {{ loss_epoch_script | safe }}
-          </div>
-        </div>
-      </section>
-          
-          <!-- Power Graph Section -->
-          <!-- <div class="border flex-fill">
-            <div class="col border d-flex flex-row pt-5 pb-5">
-              <div class="col border">
-                <div class="d-flex flex-column align-items-center">
-                  <p class="h6 align-self-center" style="cursor: default">
-                    RB's assigned
-                  </p>
-                  <div class="d-flex flex-row align-items-center">
-                    {{rbs_assigned_script | safe}}
-                  </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex flex-column">
-                    <label class="form-check-label" for="flexRadioDisabled">
-                      Auto MCS & Power
-                    </label>
-                    {{ toggle_switch_script | safe }}
-                  </div>
-                  <div class="d-flex flex-column">
-                    <label class="form-check-label" for="flexRadioDisabled">
-                      Sleep
-                    </label>
-                    {{ toggle_switch_script | safe }}
-                  </div>
-                </div>
-              </div>
-              <div class="col border d-flex flex-column justify-content-evenly">
-                <p class="h6" style="cursor: default">
-                  Scheduling policy selected
-                </p>
-                <button type="button" class="btn btn-warning align-middle">
-                  {{scheduling_policy_script | safe}}
-                </button>
-              </div>
-            </div>
-            <div class="col border pt-5">
-              <div class="d-flex flex-column justify-content-center">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-4">
-                      <div class="my-1">
-                        <p class="m-0" style="cursor: default">Impact</p>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div class="my-1">
-                        <p class="m-0" style="cursor: default">Power Usage</p>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div class="my-1">
-                        <p class="m-0" style="cursor: default">Baseline</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="row">
-                    <div class="col-4">
-                      <div
-                        class="progress my-1"
-                        role="progressbar"
-                        aria-label="Example with label"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        <div class="progress-bar" style="width: 25%">
-                          {{power_impact}}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div>
-                        <p class="m-0" style="cursor: default"></p>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div
-                        class="progress my-1"
-                        role="progressbar"
-                        aria-label="Example with label"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        <div class="progress-bar" style="width: 25%">
-                          {{power_baseline}}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-          <div class="col-4 border">
-            {{ animate_rays_script | safe }}
-          </div>
-
-                
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </section>
+  <body>
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <h1>ORAN Dashboard</h1>
+      <p>Open Radio Access Network Monitoring & Visualization</p>
     </div>
     
+    <div id="app">
+      <div class="container-fluid">
+        <!-- Top Section: Training Graph and Image Pairs -->
+        <div class="row mb-4">
+          <!-- Section 1: Static Image of Training -->
+          <div class="col-lg-5 col-md-12 mb-3">
+            <div class="dashboard-section">
+              <h3 class="section-title">Training Progress</h3>
+              <div class="image-container">
+                <img src="{{ url_for('static', filename='power_graph.png') }}" 
+                     alt="Power Graph" 
+                     class="img-fluid">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Section 2: Image Pairs -->
+          <div class="col-lg-7 col-md-12 mb-3">
+            <div class="dashboard-section">
+              <h3 class="section-title">Signal Analysis</h3>
+              <div class="image-container">
+                {{ image_pairs_script | safe }}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Bottom Section: Loss vs Epoch Graph -->
+        <div class="row">
+          <div class="col-12">
+            <div class="dashboard-section">
+              <h3 class="section-title">Loss vs Epoch</h3>
+              <div class="d-flex justify-content-center align-items-center" style="padding: 20px; min-height: 550px;">
+                {{ loss_epoch_script | safe }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
