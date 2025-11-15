@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ORAN Dashboard
 
 A Flask + Bokeh web dashboard for visualizing ORAN (Open Radio Access Network) metrics and data.
@@ -139,3 +140,7 @@ If port 8000 or 5006 is already in use:
 - The dashboard uses Bokeh for interactive visualizations embedded in a Flask web application
 - Data is stored in MongoDB for efficient querying and real-time updates
 - The application runs both Flask (port 8000) and Bokeh server (port 5006) simultaneously
+=======
+# updated_OranDashboard_rx
+Oran Dashboard updates for GENESYS Lab
+>>>>>>> 8f915159f09e84d4d447d7ee8a311a65924af4a9
