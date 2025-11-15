@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ORAN Dashboard
 
 A Flask + Bokeh web dashboard for visualizing ORAN (Open Radio Access Network) metrics and data.
