@@ -1,199 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/3.3.4/bokeh.min.js" integrity="sha512-FdxCNfGfSXQtoNpQPgWbCP02ZJzQxaPlcMstU8hjk8m47efRnJ46tto1rew4aaC5XxqNSPoqfrxqRcaRE8iCmw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link
-    href="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.4.min.css"
-    rel="stylesheet" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/3.3.4/bokeh-widgets.min.js" integrity="sha512-Md4YQ/6eQ48YKeSS7/02Mpq6veVCYFKXcBrX2W0vyGRkmENAunZFh4ZS0dzPQ/U1Az5MxVpFAIxbunwgrkV3uQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
-    <style>
-        /* Global Dark Theme */
-        body {
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        
-        /* Header Styling */
-        .dashboard-header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            padding: 20px 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
-        }
-        
-        .dashboard-header h1 {
-            color: #ffffff;
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        
-        .dashboard-header p {
-            color: #b0b0b0;
-            margin: 5px 0 0 0;
-            font-size: 0.9rem;
-        }
-        
-        /* Section Styling */
-        .dashboard-section {
-            background-color: #252525;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            border: 1px solid #333;
-        }
-        
-        .section-title {
-            color: #ffffff;
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #4a90e2;
-        }
-        
-        /* Card Styling */
-        .dashboard-card {
-            background-color: #2d2d2d;
-            border-radius: 6px;
-            padding: 15px;
-            margin: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-            border: 1px solid #3a3a3a;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .dashboard-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Image Container */
-        .image-container {
-            background-color: #2d2d2d;
-            border-radius: 6px;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 300px;
-            border: 1px solid #3a3a3a;
-        }
-        
-        .image-container img {
-            border-radius: 4px;
-            max-width: 100%;
-            height: auto;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Bokeh Slider Styling */
-        .bk .bk-slider .noUi-target.noUi-ltr.noUi-horizontal.noUi-txt-dir-ltr {
-            background: linear-gradient(to right, cyan, blue);
-        }
-        .bk .bk-slider.bk-disabled {
-            opacity: 1; 
-        }
-        
-        /* Custom Button Styling */
-        .bk-root .custom-btn {
-            border-radius: 6px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .bk-root .custom-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .bk-root .custom-btn:active {
-            transform: translateY(0);
-        }
-        
-        /* Remove default borders */
-        .no-border {
-            border: none !important;
-        }
-        
-        /* Container improvements */
-        .container-fluid {
-            padding: 20px;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .dashboard-header h1 {
-                font-size: 1.5rem;
-            }
-            .container-fluid {
-                padding: 10px;
-            }
-        }
-    </style>
-    <title>ORAN Dashboard</title>  
-  </head>
-  <body>
-    <!-- Dashboard Header -->
-    <div class="dashboard-header">
-      <h1>ORAN Dashboard</h1>
-      <p>Open Radio Access Network Monitoring & Visualization</p>
-    </div>
-    
-    <div id="app">
-      <div class="container-fluid">
-        <!-- Top Section: Training Graph and Image Pairs -->
-        <div class="row mb-4">
-          <!-- Section 1: Static Image of Training -->
-          <div class="col-lg-5 col-md-12 mb-3">
-            <div class="dashboard-section">
-              <h3 class="section-title">Training Progress</h3>
-              <div class="image-container">
-                <img src="{{ url_for('static', filename='power_graph.png') }}" 
-                     alt="Power Graph" 
-                     class="img-fluid">
-              </div>
-            </div>
-          </div>
-          
-          <!-- Section 2: Image Pairs -->
-          <div class="col-lg-7 col-md-12 mb-3">
-            <div class="dashboard-section">
-              <h3 class="section-title">Signal Analysis</h3>
-              <div class="image-container">
-                {{ image_pairs_script | safe }}
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Bottom Section: Loss vs Epoch Graph -->
-        <div class="row">
-          <div class="col-12">
-            <div class="dashboard-section">
-              <h3 class="section-title">Loss vs Epoch</h3>
-              <div class="d-flex justify-content-center align-items-center" style="padding: 20px; min-height: 550px;">
-                {{ loss_epoch_script | safe }}
-              </div>
-            </div>
-          </div>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/3.3.4/bokeh.min.js"></script>
+  <link href="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.4.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/3.3.4/bokeh-widgets.min.js"></script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      padding: 8px;
+    }
+
+    /* MAKE top-left & bottom-left larger horizontally */
+    .container-fluid {
+      padding: 0;
+      height: calc(100vh - 16px);
+      display: grid;
+
+      /* Left column bigger */
+      grid-template-columns: 1.35fr 1fr 1fr;
+
+      /* Top row normal, bottom row normal */
+      grid-template-rows: 1fr 1fr;
+
+      gap: 12px;
+    }
+
+    .dashboard-section {
+      background-color: #252525;
+      border-radius: 6px;
+      padding: 10px;
+      border: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .image-container,
+    .plot-area {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background-color: #2d2d2d;
+      border-radius: 4px;
+      padding: 6px;
+      border: 1px solid #3a3a3a;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 4px;
+    }
+
+    /* NEW POSITIONING */
+    .signal {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .training {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .placeholder-top {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    /* LOSS GRAPH MOVED TO BOTTOM LEFT */
+    .loss {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    /* AUSTIN MOVED TO BOTTOM MIDDLE */
+    .austin {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    /* PLACEHOLDER BOTTOM RIGHT */
+    .placeholder-bottom {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    @media (max-width: 900px) {
+      .container-fluid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+      }
+    }
+  </style>
+
+  <title>ORAN Dashboard</title>
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <!-- TOP LEFT: IMAGE PAIRS -->
+    <div class="dashboard-section signal">
+      <div class="image-container">
+        {{ image_pairs_script | safe }}
       </div>
     </div>
-  </body>
+
+    <!-- TOP MIDDLE -->
+    <div class="dashboard-section training">
+      <div class="image-container">
+        <img src="{{ url_for('static', filename='image.png') }}" alt="latency comparison">
+      </div>
+    </div>
+
+    <!-- TOP RIGHT -->
+    <div class="dashboard-section placeholder-top">
+      <div class="image-container">
+        <img src="{{ url_for('static', filename='PRE.png') }}" alt="pretrained model graph">
+      </div>
+    </div>
+
+    <!-- BOTTOM LEFT: LOSS GRAPH (MOVED HERE) -->
+    <div class="dashboard-section loss">
+      <div class="plot-area">
+        {{ loss_epoch_script | safe }}
+      </div>
+    </div>
+
+    <!-- BOTTOM MIDDLE: AUSTIN (MOVED HERE) -->
+    <div class="dashboard-section austin">
+      <div class="image-container">
+        <img src="{{ url_for('static', filename='austin-texas-capitol-congress_ave.jpg') }}" alt="Austin, Texas">
+      </div>
+    </div>
+
+    <!-- BOTTOM RIGHT: PLACEHOLDER -->
+    <div class="dashboard-section placeholder-bottom">
+      <div class="image-container">
+        <img src="{{ url_for('static', filename='blenderrays.png') }}" alt="Blender Rays">
+      </div>
+    </div>
+
+  </div>
+</body>
+
 </html>
