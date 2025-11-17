@@ -33,8 +33,8 @@ def loss_epoch_graph(doc: Document):
             y_axis_label="BER on Validation Dataset",
             x_range=x_range,
             y_range=y_range,
-            width=550,
-            height=335,
+            width=730,
+            height=425,
             toolbar_location=None,
             tools=[],
             output_backend="canvas"
@@ -47,7 +47,7 @@ def loss_epoch_graph(doc: Document):
         p.circle('x', 'y', source=source, color=line_color, size=6, legend_label="Validation BER")
 
         # First and last points for legend
-        first_dot = p.circle(x=[], y=[], size=10, color=first_color, legend_label="Pre-trained model")
+        first_dot = p.circle(x=[], y=[], size=10, color=first_color, legend_label="Pre-trained model", level='overlay')
         last_dot = p.circle(x=[], y=[], size=10, color=last_color, legend_label="After fine-tuning")
 
         p.legend.location = "top_right"

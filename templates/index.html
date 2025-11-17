@@ -34,7 +34,7 @@
 
     .top-row {
       display: grid;
-      grid-template-columns: 30% 30% 40%;
+      grid-template-columns: 27.5% 29.5% 43%;
       height: 100%;
       gap: 8px;
     }
@@ -76,10 +76,25 @@
     }
 
     .section-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       text-align: center;
       margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .two-section-titles {
+      display: flex;
+      justify-content: space-between; /* optional spacing */
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .two-section-title {
+      width: 50%;               /* take half of the container */
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;       /* centers text in its half */
       color: #ffffff;
     }
 
@@ -117,6 +132,10 @@
       </div>
 
       <div class="dashboard-section constellation">
+      <div class="two-section-titles">
+        <div class="two-section-title">Rx / Ch Channel Equalization</div>
+        <div class="two-section-title">Demapper Output</div>
+      </div>
         <div class="image-container">
           {{ image_pairs_script | safe }}
         </div>

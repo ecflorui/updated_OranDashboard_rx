@@ -136,9 +136,10 @@ def image_pairs_app(doc: Document):
     src_left = ColumnDataSource(data=dict(x=[], y=[]))
     src_right = ColumnDataSource(data=dict(x=[], y=[]))
 
-    p_left = figure(title="Ratio", width=275, height=350,
+    image_size = 390
+    p_left = figure(title="", width=image_size, height=image_size,
                     x_range=(x_min, x_max), y_range=(y_min, y_max), tools="")
-    p_right = figure(title="Demapper", width=275, height=350,
+    p_right = figure(title="", width=image_size, height=image_size,
                      x_range=(x_min, x_max), y_range=(y_min, y_max), tools="")
 
     # Plot only points (scatter)
